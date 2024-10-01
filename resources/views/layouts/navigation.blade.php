@@ -53,6 +53,15 @@
                             {{ __('Profile') }}
                         </x-dropdown-link>
 
+                        <x-dropdown-link :href="route('motor.edit')">
+                            {{ __('My Customizes') }}
+                        </x-dropdown-link>
+
+                        <x-dropdown-link :href="route('community.edit')">
+                            {{ __('My Concerns') }}
+                        </x-dropdown-link>
+
+
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
@@ -98,6 +107,13 @@
                 <x-responsive-nav-link :href="route('profile.edit')">
                     {{ __('Profile') }}
                 </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('motor.edit')">
+                    {{ __('My Customizes') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('community.edit')">
+                    {{ __('My Concerns') }}
+                </x-responsive-nav-link>
+                
 
                 <!-- Authentication -->
                 <form method="POST" action="{{ route('logout') }}">

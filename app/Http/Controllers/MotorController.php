@@ -13,8 +13,15 @@ class MotorController extends Controller
         return view('motor', ['motor' => $motors]);
     }
 
+    public function edit(Request $request)
+    {
+        $user = Auth::user(); 
+        $motors = Motor::where('user_id', $user->id)->get(); 
+        return view('motor', ['motor' => $motors]);
+    }
+
     public function create(){
-        return view('motorcreate');
+        return view('motor.create');
     }
 
     public function store(Request $request){

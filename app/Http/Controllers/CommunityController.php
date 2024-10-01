@@ -14,9 +14,16 @@ class CommunityController extends Controller
         return view('community', ['community' => $communities]);
     }
 
+    public function edit(Request $request)
+    {
+        $user = Auth::user(); // 
+        $communities = Community::where('user_id', $user->id)->get(); 
+        return view('community', ['community' => $communities]); 
+    }
+
     public function create()
     {
-        return view('communitycreate'); 
+        return view('community.create'); 
     }
 
     public function store(Request $request)

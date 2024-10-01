@@ -1,4 +1,5 @@
 <x-app-layout>
+<x-app-layout>
     <div class="flex flex-col items-center">
         <h1 class="text-2xl font-bold mb-4">Motors</h1>
         
@@ -27,4 +28,6 @@
             </table>
         </div>
     </div>
+</x-app-layout>
+
 </x-app-layout>

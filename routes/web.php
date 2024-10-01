@@ -15,12 +15,18 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/motor',[MotorController::class, 'index'])->middleware(['auth', 'verified'])->name('motor');
-Route::get('/motor/create',[MotorController::class, 'create'])->name('motorcreate');
+Route::get('/motor/create',[MotorController::class, 'create'])->name('motor.create');
 Route::post('/motor',[MotorController::class, 'store'])->name('motorstore');
+Route::get('/motor/edit', [MotorController::class, 'edit'])->middleware(['auth', 'verified'])->name('motor.edit');
+
+
+
+
 
 Route::get('/community',[CommunityController::class, 'index'])->middleware(['auth', 'verified'])->name('community');
-Route::get('/community/create',[CommunityController::class, 'create'])->name('communitycreate');
+Route::get('/community/create',[CommunityController::class, 'create'])->name('community.create');
 Route::post('/community',[CommunityController::class, 'store'])->name('communitystore');
+Route::get('/community/edit', [CommunityController::class, 'edit'])->middleware(['auth', 'verified'])->name('community.edit');
 
 
 
