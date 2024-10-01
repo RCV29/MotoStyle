@@ -44,4 +44,14 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    
+    public function motor()
+    {
+        return $this->hasMany(Motor::class);
+    }
+
+    public function communities()
+    {
+        return $this->hasMany(Community::class);
+    }
 }

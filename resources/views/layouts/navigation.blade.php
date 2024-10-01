@@ -16,6 +16,21 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
                 </div>
+                
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('motor')" :active="request()->routeIs('motor')">
+                        {{ __('Customize Motorcycle') }}
+                    </x-nav-link>
+                </div>
+
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('community')" :active="request()->routeIs('community')">
+                        {{ __('Community Hub') }}
+                    </x-nav-link>
+                </div>
+
+
+
             </div>
 
             <!-- Settings Dropdown -->
