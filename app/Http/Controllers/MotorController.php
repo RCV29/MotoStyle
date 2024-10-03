@@ -24,16 +24,33 @@ class MotorController extends Controller
         return view('motor.create');
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+{
+    $request->validate([
+        'image' => 'required|mimes:png,jpg,jpeg,webp',
+        'name' => 'required|string|max:255',
+        'description' => 'nullable|string',
+    ]);
 
-        $user = Auth::user();
+    $user = Auth::user();
 
-        $motor = new Motor([
-            'name' => $request->input('name'),
-            'description' => $request->input('description'),
-        ]);
+    if ($request->has('image')) {
+        $file = $request->file('image');
+        $extension = $file->getClientOriginalExtension();
+        $filename = time() . '.' . $extension;
 
-        $user->motor()->save($motor);
-        
+        $path = 'uploads/motors/';
+        $file->move($path, $filename);
     }
+
+    $motor = new Motor([
+        'image' => isset($filename) ? $path . $filename : null,
+        'name' => $request->input('name'),
+        'description' => $request->input('description'),
+    ]);
+
+    $user->motor()->save($motor);
+
+    return redirect()->route('motor')->with('success', 'Motor created successfully!');
+}
 }

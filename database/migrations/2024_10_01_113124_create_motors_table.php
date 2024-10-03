@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('motors', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('user_id');
+            $table->string('image')->nullable();
             $table->string('name');
             $table->string('description');
             $table->timestamps();
