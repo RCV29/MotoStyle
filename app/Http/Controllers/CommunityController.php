@@ -14,16 +14,16 @@ class CommunityController extends Controller
         return view('community', ['community' => $communities]);
     }
 
-    public function edit(Request $request)
+    public function show(Request $request)
     {
-        $user = Auth::user();  
-        $communities = Community::where('user_id', $user->id)->get(); 
-        return view('community', ['community' => $communities]); 
+        $user = Auth::user();
+        $communities = Community::where('user_id', $user->id)->get();
+        return view('community.show', ['community' => $communities]);
     }
 
     public function create()
     {
-        return view('community.create'); 
+        return view('community.create');
     }
 
     public function store(Request $request)
@@ -34,26 +34,69 @@ class CommunityController extends Controller
             'description' => 'nullable|string',
         ]);
 
-        if($request->has('image')){
+        $user = Auth::user();
+        $filename = null;
 
+        if ($request->has('image')) {
             $file = $request->file('image');
             $extension = $file->getClientOriginalExtension();
-
-            $filename = time().'.'.$extension;
+            $filename = time() . '.' . $extension;
 
             $path = 'uploads/community/';
             $file->move($path, $filename);
         }
 
-        $user = Auth::user();
-
-        $community = new Community([ 
-            'image' => $path.$filename,
+        $community = new Community([
+            'image' => isset($filename) ? $path . $filename : null,
             'name' => $request->input('name'),
             'description' => $request->input('description'),
         ]);
 
-        $user->communities()->save($community); 
+        $user->communities()->save($community);
         return redirect()->route('community')->with('success', 'Community created successfully!');
+    }
+
+    public function edit($id)
+    {
+        $community = Community::findOrFail($id);
+        return view('community.edit', ['community' => $community]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'image' => 'nullable|mimes:png,jpg,jpeg,webp',
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+        ]);
+
+        $community = Community::findOrFail($id);
+        $filename = null;
+
+        // Update image if provided
+        if ($request->has('image')) {
+            $file = $request->file('image');
+            $extension = $file->getClientOriginalExtension();
+            $filename = time() . '.' . $extension;
+
+            $path = 'uploads/community/';
+            $file->move($path, $filename);
+            $community->image = $path . $filename;
+        }
+
+        $community->name = $request->input('name');
+        $community->description = $request->input('description');
+        $community->save();
+
+        return redirect()->route('community')->with('success', 'Community updated successfully!');
+    }
+
+    public function destroy($id)
+    {
+        $community = Community::findOrFail($id);
+        // Optionally delete the image file from storage if necessary
+        $community->delete();
+
+        return redirect()->route('community')->with('success', 'Community deleted successfully!');
     }
 }

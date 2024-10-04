@@ -1,20 +1,45 @@
 <x-app-layout>
     <div class="flex flex-col items-center">
-        <h1 class="text-4xl font-bold mb-6">Community Hub</h1>
-        
-        <div class="mb-6">
-            <a href="{{ route('community.create') }}" class="bg-blue-500 text-black px-4 py-2 rounded hover:bg-blue-600 transition duration-200">
-                Create a Concern
-            </a>
-        </div>
+        <h1 class="text-4xl font-bold mb-6">Edit Motorcycle</h1>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-4xl">
-            @foreach($community as $item)
-                <div class="bg-white border border-gray-300 rounded-lg shadow p-4 hover:shadow-lg transition duration-200">
-                    <h2 class="text-lg font-semibold mb-2">{{ $item->name }}</h2>
-                    <p class="text-gray-700">{{ $item->description }}</p>
-                </div>
-            @endforeach
-        </div>
+        <form action="{{ route('community.update', $community->id) }}" method="POST" enctype="multipart/form-data" class="w-full max-w-lg">
+            @csrf
+            @method('PUT')
+
+            <div class="mb-4">
+                <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Name</label>
+                <input type="text" name="name" id="name" value="{{ old('name', $community->name) }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                @error('name')
+                    <span class="text-red-500 text-xs italic">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <div class="mb-4">
+                <label for="description" class="block text-gray-700 text-sm font-bold mb-2">Description</label>
+                <textarea name="description" id="description" rows="4" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">{{ old('description', $community->description) }}</textarea>
+                @error('description')
+                    <span class="text-red-500 text-xs italic">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <div class="mb-4">
+                <label for="image" class="block text-gray-700 text-sm font-bold mb-2">Change</label>
+                <input type="file" name="image" id="image" accept="image/png, image/jpeg, image/webp" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                @error('image')
+                    <span class="text-red-500 text-xs italic">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <div class="mb-6">
+                <img src="{{ asset($community->image) }}" alt="Current Image" class="w-32 h-32 object-cover rounded" />
+            </div>
+
+            <div class="flex items-center justify-between">
+                <button type="submit" class="bg-blue-500 text-black px-4 py-2 rounded hover:bg-blue-600 transition duration-200">
+                    Update Motorcycle
+                </button>
+                <a href="{{ route('community') }}" class="text-blue-500 hover:underline">Cancel</a>
+            </div>
+        </form>
     </div>
 </x-app-layout>

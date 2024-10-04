@@ -53,11 +53,11 @@
                             {{ __('Profile') }}
                         </x-dropdown-link>
 
-                        <x-dropdown-link :href="route('motor.edit')">
+                        <x-dropdown-link :href="route('motor.show')">
                             {{ __('My Customizes') }}
                         </x-dropdown-link>
 
-                        <x-dropdown-link :href="route('community.edit')">
+                        <x-dropdown-link :href="route('community.show')">
                             {{ __('My Concerns') }}
                         </x-dropdown-link>
 
@@ -107,10 +107,10 @@
                 <x-responsive-nav-link :href="route('profile.edit')">
                     {{ __('Profile') }}
                 </x-responsive-nav-link>
-                <x-responsive-nav-link :href="route('motor.edit')">
+                <x-responsive-nav-link :href="route('motor.show')">
                     {{ __('My Customizes') }}
                 </x-responsive-nav-link>
-                <x-responsive-nav-link :href="route('community.edit')">
+                <x-responsive-nav-link :href="route('community.show')">
                     {{ __('My Concerns') }}
                 </x-responsive-nav-link>
                 
