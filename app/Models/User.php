@@ -55,8 +55,13 @@ class User extends Authenticatable
         return $this->hasMany(Community::class);
     }
 
-    public function comments()
+    public function motorComments()
     {
-        return $this->hasMany(MotorComment::class);
+    return $this->hasMany(MotorComment::class);
     }
+
+    public function communityComments()
+    {
+    return $this->hasMany(CommunityComment::class);
+    }   
 }

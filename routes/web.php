@@ -33,6 +33,7 @@ Route::get('/community/edit/{id}', [CommunityController::class, 'edit'])->middle
 Route::put('/community/{id}', [CommunityController::class, 'update'])->middleware(['auth', 'verified'])->name('community.update');
 Route::delete('/community/{id}', [CommunityController::class, 'destroy'])->middleware(['auth', 'verified'])->name('community.destroy');
 Route::get('/community/{id}', [CommunityController::class, 'see'])->name('community.see');
+Route::post('/community/{id}/comment', [CommunityController::class, 'comment'])->name('community.comment');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

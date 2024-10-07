@@ -32,7 +32,7 @@
                 <form method="POST" action="{{ route('motor.comment', $motor->id) }}">
                     @csrf
                     <textarea name="comment" rows="4" class="border rounded-lg w-full p-3 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Write your comment here..." required></textarea>
-                    <button type="submit" class="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition duration-200">
+                    <button type="submit" class="bg-blue-500 text-black px-6 py-2 rounded-lg hover:bg-blue-600 transition duration-200">
                         Submit
                     </button>
                 </form>

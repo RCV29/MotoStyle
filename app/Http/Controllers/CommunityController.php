@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
 use App\Models\Community;
+use App\Models\CommunityComment; // Make sure you have this model
 use Illuminate\Support\Facades\Auth;
 
 class CommunityController extends Controller
@@ -16,8 +18,8 @@ class CommunityController extends Controller
 
     public function show(Request $request)
     {
-        $user = Auth::user();
-        $communities = Community::where('user_id', $user->id)->get();
+        $user = Auth::user(); 
+        $communities = Community::where('user_id', $user->id)->get(); 
         return view('community.show', ['community' => $communities]);
     }
 
@@ -102,7 +104,26 @@ class CommunityController extends Controller
 
     public function see($id)
     {
-    $community = Community::findOrFail($id);
-    return view('community.see', compact('community'));
+        $community = Community::findOrFail($id);
+        // Eager load comments with user
+        $comments = $community->comments()->with('user')->get(); 
+
+        return view('community.see', compact('community', 'comments'));
+    }
+
+    public function comment($id, Request $request)
+    {
+        $community = Community::findOrFail($id);
+
+        $request->validate(['comment' => 'required|string|max:255']);
+
+        // Store the comment
+        $communityComment = new CommunityComment();
+        $communityComment->user_id = auth()->id(); // Ensure the user is authenticated
+        $communityComment->community_id = $community->id;
+        $communityComment->comment = htmlspecialchars($request->input('comment'));
+        $communityComment->save();
+
+        return redirect()->route('community.see', $community->id)->with('success', 'Comment submitted successfully!');
     }
 }

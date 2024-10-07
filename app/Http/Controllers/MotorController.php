@@ -10,7 +10,8 @@ use Illuminate\Support\Facades\Auth;
 
 class MotorController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         $motors = Motor::all();
         return view('motor', ['motor' => $motors]);
     }
@@ -22,7 +23,8 @@ class MotorController extends Controller
         return view('motor.show', ['motor' => $motors]);
     }
 
-    public function create(){
+    public function create()
+    {
         return view('motor.create');
     }
 
@@ -102,32 +104,27 @@ class MotorController extends Controller
     }
 
     public function see($id)
-{
-    $motor = Motor::findOrFail($id);
-    // Eager load comments with user
-    $comments = $motor->comments()->with('user')->get(); 
+    {
+        $motor = Motor::findOrFail($id);
+        // Eager load comments with user
+        $comments = $motor->comments()->with('user')->get(); 
 
-    return view('motor.see', compact('motor', 'comments'));
-}
+        return view('motor.see', compact('motor', 'comments'));
+    }
 
+    public function comment($id, Request $request)
+    {
+        $motor = Motor::findOrFail($id);
 
+        $request->validate(['comment' => 'required|string|max:255']);
 
-    
-public function comment($id, Request $request)
-{
-    $motor = Motor::findOrFail($id);
+        // Store the comment
+        $motorComment = new MotorComment();
+        $motorComment->user_id = auth()->id(); // Ensure the user is authenticated
+        $motorComment->motor_id = $motor->id;
+        $motorComment->comment = htmlspecialchars($request->input('comment'));
+        $motorComment->save();
 
-    $request->validate(['comment' => 'required|string|max:255']);
-
-    // Store the comment
-    $motorComment = new MotorComment();
-    $motorComment->user_id = auth()->id(); // Ensure the user is authenticated
-    $motorComment->motor_id = $motor->id;
-    $motorComment->comment = htmlspecialchars($request->input('comment'));
-    $motorComment->save();
-
-    return redirect()->route('motor.see', $motor->id)->with('success', 'Comment submitted successfully!');
-}
-
-
+        return redirect()->route('motor.see', $motor->id)->with('success', 'Comment submitted successfully!');
+    }
 }
