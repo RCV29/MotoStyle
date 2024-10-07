@@ -22,6 +22,6 @@ class Motor extends Model
 
     public function comments()
     {
-        return $this->hasMany(MotorComment::class, 'motor_id'); // Specify the foreign key if necessary
+        return $this->hasMany(MotorComment::class, 'motor_id');
     }
 }

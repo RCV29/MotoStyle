@@ -19,8 +19,8 @@ class CommunityComment extends Model
         return $this->belongsTo(Community::class, 'community_id');
     }
 
-    public function user() // This relationship should already exist
+    public function user() 
     {
-        return $this->belongsTo(User::class, 'user_id'); // Ensure 'user_id' is the correct foreign key
+        return $this->belongsTo(User::class, 'user_id'); 
     }
 }

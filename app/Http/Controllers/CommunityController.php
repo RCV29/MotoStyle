@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Community;
-use App\Models\CommunityComment; // Make sure you have this model
+use App\Models\CommunityComment;
 use Illuminate\Support\Facades\Auth;
 
 class CommunityController extends Controller
@@ -75,7 +75,6 @@ class CommunityController extends Controller
         $community = Community::findOrFail($id);
         $filename = null;
 
-        // Update image if provided
         if ($request->has('image')) {
             $file = $request->file('image');
             $extension = $file->getClientOriginalExtension();
@@ -96,7 +95,6 @@ class CommunityController extends Controller
     public function destroy($id)
     {
         $community = Community::findOrFail($id);
-        // Optionally delete the image file from storage if necessary
         $community->delete();
 
         return redirect()->route('community')->with('success', 'Community deleted successfully!');
@@ -105,7 +103,6 @@ class CommunityController extends Controller
     public function see($id)
     {
         $community = Community::findOrFail($id);
-        // Eager load comments with user
         $comments = $community->comments()->with('user')->get(); 
 
         return view('community.see', compact('community', 'comments'));
@@ -117,9 +114,8 @@ class CommunityController extends Controller
 
         $request->validate(['comment' => 'required|string|max:255']);
 
-        // Store the comment
         $communityComment = new CommunityComment();
-        $communityComment->user_id = auth()->id(); // Ensure the user is authenticated
+        $communityComment->user_id = auth()->id(); 
         $communityComment->community_id = $community->id;
         $communityComment->comment = htmlspecialchars($request->input('comment'));
         $communityComment->save();

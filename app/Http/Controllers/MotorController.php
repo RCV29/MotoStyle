@@ -74,9 +74,7 @@ class MotorController extends Controller
 
         $motor = Motor::findOrFail($id);
         
-        // Update image if provided
         if ($request->has('image')) {
-            // Optionally delete old image here if necessary
             $file = $request->file('image');
             $extension = $file->getClientOriginalExtension();
             $filename = time() . '.' . $extension;
@@ -97,7 +95,6 @@ class MotorController extends Controller
     public function destroy($id)
     {
         $motor = Motor::findOrFail($id);
-        // Optionally delete the image file from storage if necessary
         $motor->delete();
 
         return redirect()->route('motor')->with('success', 'Motor deleted successfully!');
@@ -106,7 +103,6 @@ class MotorController extends Controller
     public function see($id)
     {
         $motor = Motor::findOrFail($id);
-        // Eager load comments with user
         $comments = $motor->comments()->with('user')->get(); 
 
         return view('motor.see', compact('motor', 'comments'));
@@ -118,9 +114,8 @@ class MotorController extends Controller
 
         $request->validate(['comment' => 'required|string|max:255']);
 
-        // Store the comment
         $motorComment = new MotorComment();
-        $motorComment->user_id = auth()->id(); // Ensure the user is authenticated
+        $motorComment->user_id = auth()->id();
         $motorComment->motor_id = $motor->id;
         $motorComment->comment = htmlspecialchars($request->input('comment'));
         $motorComment->save();
