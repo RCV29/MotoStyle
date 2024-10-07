@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
 use App\Models\Motor;
 use App\Models\MotorComment;
 use Illuminate\Support\Facades\Auth;
@@ -103,10 +104,13 @@ class MotorController extends Controller
     public function see($id)
 {
     $motor = Motor::findOrFail($id);
-    $comments = $motor->comments; // Fetch comments related to this motor
+    // Eager load comments with user
+    $comments = $motor->comments()->with('user')->get(); 
 
     return view('motor.see', compact('motor', 'comments'));
 }
+
+
 
     
 public function comment($id, Request $request)
@@ -117,12 +121,12 @@ public function comment($id, Request $request)
 
     // Store the comment
     $motorComment = new MotorComment();
+    $motorComment->user_id = auth()->id(); // Ensure the user is authenticated
     $motorComment->motor_id = $motor->id;
     $motorComment->comment = htmlspecialchars($request->input('comment'));
     $motorComment->save();
 
-    return redirect()->route('motor.see', $motor->id)
-                     ->with('success', 'Comment submitted successfully!');
+    return redirect()->route('motor.see', $motor->id)->with('success', 'Comment submitted successfully!');
 }
 
 
