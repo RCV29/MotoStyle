@@ -99,4 +99,10 @@ class CommunityController extends Controller
 
         return redirect()->route('community')->with('success', 'Community deleted successfully!');
     }
+
+    public function see($id)
+    {
+    $community = Community::findOrFail($id);
+    return view('community.see', compact('community'));
+    }
 }

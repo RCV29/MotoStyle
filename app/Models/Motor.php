@@ -14,9 +14,13 @@ class Motor extends Model
         'image',
         'name',
         'description'
-
     ];
     public function user(){
         return $this->belongsTo(User::class);
-}
+    }
+
+    public function motors()
+    {
+        return $this->hasMany(MotorComment::class);
+    }
 }

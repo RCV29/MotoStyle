@@ -11,11 +11,13 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-4xl">
             @foreach($motor as $item)
                 <div class="bg-white border border-gray-300 rounded-lg shadow p-4 hover:shadow-lg transition duration-200">
+                    <a href="{{ route('motor.see', $item->id) }}" class="block">
                     <div class="flex justify-center mb-2 p-4">
                         <img src="{{ asset($item->image) }}" class="w-32 h-32 object-cover rounded" alt="img"/>
                     </div>
                     <h2 class="text-lg font-semibold mb-2 text-center">{{ $item->name }}</h2>
                     <p class="text-gray-700 text-center">{{ $item->description }}</p>
+                    </a>
                 </div>
             @endforeach
         </div>

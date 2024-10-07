@@ -21,7 +21,7 @@ Route::get('/motor/show', [MotorController::class, 'show'])->middleware(['auth',
 Route::get('/motor/edit/{id}', [MotorController::class, 'edit'])->middleware(['auth', 'verified'])->name('motor.edit');
 Route::put('/motor/{id}', [MotorController::class, 'update'])->middleware(['auth', 'verified'])->name('motor.update');
 Route::delete('/motor/{id}', [MotorController::class, 'destroy'])->middleware(['auth', 'verified'])->name('motor.destroy');
-
+Route::get('/motor/{id}', [MotorController::class, 'see'])->name('motor.see');
 
 
 
@@ -32,7 +32,7 @@ Route::get('/community/show', [CommunityController::class, 'show'])->middleware(
 Route::get('/community/edit/{id}', [CommunityController::class, 'edit'])->middleware(['auth', 'verified'])->name('community.edit');
 Route::put('/community/{id}', [CommunityController::class, 'update'])->middleware(['auth', 'verified'])->name('community.update');
 Route::delete('/community/{id}', [CommunityController::class, 'destroy'])->middleware(['auth', 'verified'])->name('community.destroy');
-
+Route::get('/community/{id}', [CommunityController::class, 'see'])->name('community.see');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

@@ -98,4 +98,10 @@ class MotorController extends Controller
 
         return redirect()->route('motor')->with('success', 'Motor deleted successfully!');
     }
+
+    public function see($id)
+    {
+    $motor = Motor::findOrFail($id);
+    return view('motor.see', compact('motor'));
+    }
 }
