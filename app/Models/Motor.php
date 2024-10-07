@@ -11,6 +11,7 @@ class Motor extends Model
 
     protected $fillable = [
         'user_id',
+        'motor_id',
         'image',
         'name',
         'description'
@@ -19,8 +20,8 @@ class Motor extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function motors()
+    public function comments()
     {
-        return $this->hasMany(MotorComment::class);
+        return $this->hasMany(MotorComment::class, 'motor_id'); // Specify the foreign key if necessary
     }
 }

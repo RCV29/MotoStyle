@@ -22,7 +22,7 @@ Route::get('/motor/edit/{id}', [MotorController::class, 'edit'])->middleware(['a
 Route::put('/motor/{id}', [MotorController::class, 'update'])->middleware(['auth', 'verified'])->name('motor.update');
 Route::delete('/motor/{id}', [MotorController::class, 'destroy'])->middleware(['auth', 'verified'])->name('motor.destroy');
 Route::get('/motor/{id}', [MotorController::class, 'see'])->name('motor.see');
-
+Route::post('/motor/{id}/comment', [MotorController::class, 'comment'])->name('motor.comment');
 
 
 Route::get('/community',[CommunityController::class, 'index'])->middleware(['auth', 'verified'])->name('community');

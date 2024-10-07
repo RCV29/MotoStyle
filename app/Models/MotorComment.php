@@ -14,7 +14,7 @@ class MotorComment extends Model
         'comment',
     ];
 
-    public function motors(){
+    public function motor(){
         return $this->belongsTo(Motor::class);
     }
 }
