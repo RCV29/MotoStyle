@@ -28,9 +28,6 @@
                         {{ __('Community Hub') }}
                     </x-nav-link>
                 </div>
-
-
-
             </div>
 
             <!-- Settings Dropdown -->
