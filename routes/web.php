@@ -53,9 +53,11 @@ route::get("admin/motor",[HomeController::class, 'motor_index'])->name('admin.mo
 route::get('admin/motor/{user}/edit', [HomeController::class, 'motor_edit'])->name('admin.motoredit');
 route::put('admin/motor/{user}', [HomeController::class, 'motor_update'])->name('admin.motorupdate');
 route::delete('admin/motors/{user}', [HomeController::class, 'motor_destroy'])->name('admin.motordestroy');
+route::get('/extract/motor', [HomeController::class, 'extract_motor'])->name('admin.extract.motor');
 
 
 route::get("admin/community",[HomeController::class, 'community_index'])->name('admin.community');
 route::get('admin/community/{user}/edit', [HomeController::class, 'community_edit'])->name('admin.communityedit');
 route::put('admin/community/{user}', [HomeController::class, 'community_update'])->name('admin.communityupdate');
 route::delete('admin/communities/{user}', [HomeController::class, 'community_destroy'])->name('admin.communitydestroy');
+route::get('/extract/community', [HomeController::class, 'extract_community'])->name('admin.extract.community');

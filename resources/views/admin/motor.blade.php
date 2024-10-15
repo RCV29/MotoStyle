@@ -55,6 +55,10 @@
 
     <div class="container">
         <h1>Customizes</h1>
+        
+        <!-- Extract Button -->
+        <a href="{{ route('admin.extract.motor') }}" class="btn btn-success mb-3">Extract Data</a>
+
         <table class="table table-bordered">
             <thead>
                 <tr>
