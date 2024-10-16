@@ -156,45 +156,6 @@ class HomeController extends Controller
         return redirect()->route('admin.community')->with('success', 'Community deleted successfully.');
     }
 
-    public function download()
-    {
-        // Create new Spreadsheet object
-        $spreadsheet = new Spreadsheet();
-        $sheet = $spreadsheet->getActiveSheet();
-
-        // Set the header row for motors
-        $sheet->setCellValue('A1', 'ID');
-        $sheet->setCellValue('B1', 'Name');
-        $sheet->setCellValue('C1', 'Description');
-        $sheet->setCellValue('D1', 'Image');
-
-        // Fetch data from the Motor model
-        $motors = Motor::all();
-        $row = 2; // Start from the second row
-        foreach ($motors as $motor) {
-            $sheet->setCellValue('A' . $row, $motor->id);
-            $sheet->setCellValue('B' . $row, $motor->name);
-            $sheet->setCellValue('C' . $row, $motor->description);
-            $sheet->setCellValue('D' . $row, $motor->image);
-            $row++;
-        }
-
-        // Create a writer and save the file
-        $writer = new Xlsx($spreadsheet);
-
-        // Set the filename
-        $fileName = 'motors_data.xlsx';
-
-        // Set headers to prompt download
-        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment;filename="' . $fileName . '"');
-        header('Cache-Control: max-age=0');
-
-        // Write the file to the output
-        $writer->save('php://output');
-        exit;
-    }
-
     public function extract_motor()
     {
         // Create new Spreadsheet object
