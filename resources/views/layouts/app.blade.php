@@ -13,9 +13,28 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+        <!-- Inline CSS for background and font -->
+        <style>
+            body {
+                font-family: "Noto Sans JP", sans-serif;
+                background-color: #cfcfcf;
+            }
+
+            body::after {
+                position: fixed;
+                content: "";
+                height: 100%;
+                width: 0;
+                top: 0;
+                right: 0;
+                background-color: var(--text-dark);
+                z-index: -1;
+            }
+        </style>
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
+        <div class="min-h-screen bg-black-100">
             @include('layouts.navigation')
 
             <!-- Page Heading -->

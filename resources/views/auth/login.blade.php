@@ -1,40 +1,354 @@
-<x-guest-layout>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
-
-    <form method="POST" action="{{ route('login') }}">
-        @csrf
-
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>MotoStyle - Log in & Register</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;1,500&display=swap');
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+        body {
+            height: 100vh;
+            width: 100%;
+            background: #000;
+        }
+        .background {
+            background: url(logo/background1.jpg) no-repeat;
+            background-position: center;
+            background-size: cover;
+            height: 100vh;
+            width: 100%;
+            filter: blur(10px);
+        }
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 25px 13%;
+            background: transparent;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+        }
+        .navbar a {
+            position: relative;
+            font-size: 16px;
+            color: #fff;
+            margin-right: 30px;
+            text-decoration: none;
+        }
+        .navbar a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #fff;
+            bottom: -5px;
+            border-radius: 5px;
+            transform: translateY(10px);
+            opacity: 0;
+            transition: .5s ease;
+        }
+        .navbar a:hover:after {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        .search-bar {
+            width: 250px;
+            height: 45px;
+            background-color: transparent;
+            display: flex;
+            align-items: center;
+        }
+        .search-bar input {
+            width: 100%;
+            background-color: transparent;
+            border: none;
+            outline: none;
+            color: #000000;
+            font-size: 16px;
+            padding-left: 10px;
+        }
+        .search-bar button {
+            width: 40px;
+            height: 100%;
+            background: transparent;
+            outline: none;
+            border: none;
+            color: #000000;
+            cursor: pointer;
+        }
+        .search-bar input::placeholder {
+            color: #000000;
+        }
+        .search-bar button i {
+            font-size: 22px;
+        }
+        .container {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 75%;
+            height: 550px;
+            margin-top: 20px;
+            background: url(logo/background1.jpg) no-repeat;
+            background-position: center;
+            background-size: cover;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+        .item {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 58%;
+            height: 100%;
+            color: #fff;
+            background: transparent;
+            padding: 80px;
+            display: flex;
+            justify-content: space-between;
+            flex-direction: column;
+        }
+        .item .logo {
+            color: #ffffff;
+            font-size: 30px;
+        }
+        .text-item h2 {
+            font-size: 40px;
+            line-height: 1;
+        }
+        .text-item p {
+            font-size: 16px;
+            margin: 20px 0;
+        }
+        .social-icon a i {
+            color: #7a7a7a;
+            font-size: 24px;
+            margin-left: 10px;
+            cursor: pointer;
+            transition: .5s ease;
+        }
+        .social-icon a:hover i {
+            transform: scale(1.2);
+        }
+        .container .login-section {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: calc(100% - 58%);
+            height: 100%;
+            color: #000000;
+            backdrop-filter: blur(10px);
+        }
+        .login-section .form-box {
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+        }
+        .login-section .form-box.register {
+            transform: translateX(430px);
+            transition: transform .6s ease;
+            transition-delay: 0s;
+        }
+        .login-section.active .form-box.register {
+            transform: translateX(0px);
+            transition-delay: .7s;
+        }
+        .login-section .form-box.login {
+            transform: translateX(0px);
+            transition: transform .6s ease;
+            transition-delay: 0.7s;
+        }
+        .login-section.active .form-box.login {
+            transform: translateX(430px);
+            transition-delay: 0s;
+        }
+        .login-section .form-box h2 {
+            text-align: center;
+            font-size: 25px;
+        }
+        .form-box .input-box {
+            width: 340px;
+            height: 50px;
+            border-bottom: 2px solid #000000;
+            margin: 30px 0;
+            position: relative;
+        }
+        .input-box input {
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            border: none;
+            outline: none;
+            font-size: 16px;
+            padding-right: 28px;
+        }
+        .input-box label {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            font-size: 16px;
+            font-weight: 600px;
+            pointer-events: none;
+            transition: .5s ease;
+        }
+        .input-box .icon {
+            position: absolute;
+            top: 13px;
+            right: 0;
+            font-size: 19px;
+            color: #ffffff;
+        }
+        .input-box input:focus ~ label,
+        .input-box input:valid ~ label {
+            top: -5px;
+        }
+        .remember-password {
+            font-size: 14px;
+            font-weight: 500;
+            margin: -15px 0 15px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .remember-password label input {
+            accent-color: #fff;
+            margin-right: 3px;
+        }
+        .remember-password a {
+            color: #fff;
+            text-decoration: none;
+        }
+        .remember-password a:hover {
+            text-decoration: underline;
+        }
+        .btn {
+            background: #fff;
+            width: 100%;
+            height: 45px;
+            outline: none;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            background: #000000;
+            font-size: 16px;
+            color: #fff;
+            box-shadow: rgba(0, 0, 0, 0.4);
+        }
+        .create-account {
+            color: #ffffff;
+            font-size: 14.5px;
+            text-align: center;
+            margin: 25px;
+        }
+        .create-account p a {
+            color: #7a7a7a;
+            font-weight: 600px;
+            text-decoration: none;
+        }
+        .create-account p a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="background"></div>
+    <div class="container">
+        <div class="item">
+            <h2 class="logo"><i class='bx bxl-xing'></i>MotoStyle</h2>
+            <div class="text-item">
+                <h2>Welcome! <br><span>Ride along with us</span></h2>
+                <p>Ride with pleasure</p>
+                <div class="social-icon">
+                    <a href="#"><i class='bx bxl-facebook'></i></a>
+                    <a href="#"><i class='bx bxl-twitter'></i></a>
+                    <a href="#"><i class='bx bxl-youtube'></i></a>
+                    <a href="#"><i class='bx bxl-instagram'></i></a>
+                    <a href="#"><i class='bx bxl-linkedin'></i></a>
+                </div>
+            </div>
         </div>
+        <div class="login-section">
+            <div class="form-box login">
+                <form method="POST" action="{{ route('login') }}">
+                    @csrf
+                    <h2>Sign In</h2>
+                    <div class="input-box">
+                        <span class="icon"><i class='bx bxs-envelope'></i></span>
+                        <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" required autofocus />
+                        <x-input-label for="email" :value="__('Email')" />
+                    </div>
+                    <div class="input-box">
+                        <span class="icon"><i class='bx bxs-lock-alt'></i></span>
+                        <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" required />
+                        <x-input-label for="password" :value="__('Password')" />
+                    </div>
+                    <div class="remember-password">
+                        <label><input type="checkbox">Remember Me</label>
+                        <a href="#">Forget Password</a>
+                    </div>
+                    <button class="btn">Login In</button>
+                    <div class="create-account">
+                        <p>Create A New Account? <a href="#" class="register-link">Sign Up</a></p>
+                    </div>
+                </form>
+            </div>
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+            <div class="form-box register">
+                <form method="POST" action="{{ route('register') }}">
+                    @csrf
+                    <h2>Sign Up</h2>
+                    <div class="input-box">
+                        <span class="icon"><i class='bx bxs-user'></i></span>
+                        <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" required autofocus />
+                        <x-input-label for="name" :value="__('Name')" />
+                    </div>
+                    <div class="input-box">
+                        <span class="icon"><i class='bx bxs-envelope'></i></span>
+                        <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" required />
+                        <x-input-label for="email" :value="__('Email')" />
+                    </div>
+                    <div class="input-box">
+                        <span class="icon"><i class='bx bxs-lock-alt'></i></span>
+                        <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" required />
+                        <x-input-label for="password" :value="__('Password')" />
+                    </div>
+                    <div class="input-box">
+                        <span class="icon"><i class='bx bxs-lock-alt'></i></span>
+                        <x-text-input id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" required />
+                        <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
+                    </div>
+                    <button class="btn">Register</button>
+                    <div class="create-account">
+                        <p>Already Have An Account? <a href="#" class="login-link">Sign In</a></p>
+                    </div>
+                </form>
+            </div>
         </div>
+    </div>
 
-
-        <div class="flex items-center justify-end mt-4">
-        <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('register') }}">
-                {{ __('Register?') }}
-            </a>
-
-
-
-            <x-primary-button class="ms-3">
-                {{ __('Log in') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+    <script>
+        const loginsec = document.querySelector('.login-section');
+        const loginlink = document.querySelector('.login-link');
+        const registerlink = document.querySelector('.register-link');
+        registerlink.addEventListener('click', () => {
+            loginsec.classList.add('active');
+        });
+        loginlink.addEventListener('click', () => {
+            loginsec.classList.remove('active');
+        });
+    </script>
+</body>
+</html>

@@ -1,44 +1,46 @@
 <x-app-layout>
-    <div class="flex flex-col items-center">
-        <h1 class="text-4xl font-bold mb-6">Edit Motorcycle</h1>
-
-        <form action="{{ route('motor.update', $motor->id) }}" method="POST" enctype="multipart/form-data" class="w-full max-w-lg">
+    <h1 class="text-lg font-semibold text-center mb-6">Edit Customize</h1>
+    <div class="max-w-lg mx-auto mt-6 p-6 bg-white rounded-lg shadow-md border border-gray-200">
+        <form action="{{ route('motor.update', $motor->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
 
-            <div class="mb-4">
-                <label for="name" class="block text-gray-700 text-sm font-bold mb-2">Name</label>
-                <input type="text" name="name" id="name" value="{{ old('name', $motor->name) }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
-                @error('name')
-                    <span class="text-red-500 text-xs italic">{{ $message }}</span>
-                @enderror
-            </div>
-
-            <div class="mb-4">
-                <label for="description" class="block text-gray-700 text-sm font-bold mb-2">Description</label>
-                <textarea name="description" id="description" rows="4" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">{{ old('description', $motor->description) }}</textarea>
-                @error('description')
-                    <span class="text-red-500 text-xs italic">{{ $message }}</span>
-                @enderror
-            </div>
-
-            <div class="mb-4">
-                <label for="image" class="block text-gray-700 text-sm font-bold mb-2">Change</label>
-                <input type="file" name="image" id="image" accept="image/png, image/jpeg, image/webp" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            <!-- Image Upload -->
+            <div class="mt-4">
+                <x-input-label for="image" :value="__('Change Image')" />
+                <input type="file" id="image" name="image" accept="image/png, image/jpeg, image/webp" class="block mt-1 w-full border rounded-md shadow-sm" />
                 @error('image')
-                    <span class="text-red-500 text-xs italic">{{ $message }}</span>
+                    <x-input-error :messages="$errors->get('image')" class="mt-2" />
                 @enderror
             </div>
 
-            <div class="mb-6">
+            <!-- Current Image Display -->
+            <div class="mt-4 flex justify-center">
                 <img src="{{ asset($motor->image) }}" alt="Current Image" class="w-32 h-32 object-cover rounded" />
             </div>
 
-            <div class="flex items-center justify-between">
-                <button type="submit" class="bg-blue-500 text-black px-4 py-2 rounded hover:bg-blue-600 transition duration-200">
-                    Update Motorcycle
-                </button>
-                <a href="{{ route('motor') }}" class="text-blue-500 hover:underline">Cancel</a>
+            <!-- Name -->
+            <div class="mt-4">
+                <x-input-label for="name" :value="__('Name')" />
+                <x-text-input id="name" class="block mt-1 w-full border rounded-md shadow-sm" type="text" name="name" :value="old('name', $motor->name)" required autofocus autocomplete="name" />
+                @error('name')
+                    <x-input-error :messages="$errors->get('name')" class="mt-2" />
+                @enderror
+            </div>
+
+            <!-- Description -->
+            <div class="mt-4">
+                <x-input-label for="description" :value="__('Description')" />
+                <x-text-input id="description" class="block mt-1 w-full border rounded-md shadow-sm" type="text" name="description" :value="old('description', $motor->description)" required />
+                @error('description')
+                    <x-input-error :messages="$errors->get('description')" class="mt-2" />
+                @enderror
+            </div>
+
+            <div class="flex items-center justify-end mt-4">
+                <x-primary-button>
+                    {{ __('Update') }}
+                </x-primary-button>
             </div>
         </form>
     </div>

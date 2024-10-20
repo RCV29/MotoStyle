@@ -1,3 +1,127 @@
+<style>
+    /* Container Styling */
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    /* Dashboard Header */
+    h1 {
+        font-size: 36px;
+        font-weight: bold;
+        margin-bottom: 20px;
+        color: #fff; /* Change text color to white */
+    }
+
+    /* Card Styling */
+    .bg-white {
+        background-color: white;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        transition: transform 0.2s ease; /* Keep transition for smooth scaling */
+    }
+
+    /* Hover effect only for cards */
+    .bg-white.card:hover {
+        transform: scale(1.05);
+    }
+
+    .text-xl {
+        font-size: 24px;
+        font-weight: 600;
+        margin-bottom: 10px;
+        color: #fff; /* Change text color to white */
+    }
+
+    .text-gray-600 {
+        color: #bbb; /* Lighter gray for better contrast */
+        font-size: 16px;
+    }
+
+    /* Recent Activity Section */
+    .mt-10 {
+        margin-top: 40px;
+    }
+
+    .text-2xl {
+        font-size: 28px;
+        font-weight: 600;
+        margin-bottom: 15px;
+        color: #fff; /* Change text color to white */
+    }
+
+    .bg-white ul {
+        background-color: white;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 12px;
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .p-4 {
+        padding: 15px 20px;
+        border-bottom: 1px solid #eee;
+        color: #333;
+    }
+
+    .p-4:last-child {
+        border-bottom: none;
+    }
+
+    /* Responsive Behavior */
+    @media (max-width: 768px) {
+        .grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    /* Navigation Styling */
+    nav {
+        background-color: #000; /* Set background to black */
+        color: #fff; /* Set text color to white */
+    }
+
+    nav a {
+        color: #fff; /* Make links white */
+    }
+
+    /* Dropdown Button */
+    button {
+        color: #fff; /* White text for button */
+    }
+
+    /* Hover and Focus States */
+    button:hover,
+    button:focus,
+    nav a:hover,
+    nav a:focus {
+        color: #ddd; /* Lighter color on hover for better visibility */
+    }
+
+    .border-gray-100 {
+        border-color: #FFF; /* Darken the border */
+    }
+
+    /* For responsive menu */
+    .sm\:hidden {
+        color: #fff;
+    }
+
+    .text-gray-500 {
+        color: #FFF; /* Change light text to a soft gray for contrast */
+    }
+
+    .text-gray-800 {
+        color: #fff; /* White text for darker background */
+    }
+
+    .bg-white {
+        background-color: #000; /* Set background of dropdown to black */
+    }
+</style>
+
+
 <nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -28,16 +152,13 @@
                         {{ __('Community Hub') }}
                     </x-nav-link>
                 </div>
-
-
-
             </div>
 
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
-                        <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
+                        <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
                             <div>{{ Auth::user()->name }}</div>
 
                             <div class="ms-1">
