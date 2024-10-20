@@ -53,9 +53,17 @@ route::get("admin/motor",[HomeController::class, 'motor_index'])->name('admin.mo
 route::get('admin/motor/{user}/edit', [HomeController::class, 'motor_edit'])->name('admin.motoredit');
 route::put('admin/motor/{user}', [HomeController::class, 'motor_update'])->name('admin.motorupdate');
 route::delete('admin/motors/{user}', [HomeController::class, 'motor_destroy'])->name('admin.motordestroy');
+<<<<<<< HEAD
+=======
+route::get('/extract/motor', [HomeController::class, 'extract_motor'])->name('admin.extract.motor');
+>>>>>>> ff244c12083992819897cef35a2590646157f8c3
 
 
 route::get("admin/community",[HomeController::class, 'community_index'])->name('admin.community');
 route::get('admin/community/{user}/edit', [HomeController::class, 'community_edit'])->name('admin.communityedit');
 route::put('admin/community/{user}', [HomeController::class, 'community_update'])->name('admin.communityupdate');
 route::delete('admin/communities/{user}', [HomeController::class, 'community_destroy'])->name('admin.communitydestroy');
+<<<<<<< HEAD
+=======
+route::get('/extract/community', [HomeController::class, 'extract_community'])->name('admin.extract.community');
+>>>>>>> ff244c12083992819897cef35a2590646157f8c3

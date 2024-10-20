@@ -54,7 +54,15 @@
     </nav>
 
     <div class="container">
+<<<<<<< HEAD
         <h1>Customizes</h1>
+=======
+        <h1>Communities</h1>
+
+        <!-- Extract Button -->
+        <a href="{{ route('admin.extract.community') }}" class="btn btn-success mb-3">Extract Data</a>
+
+>>>>>>> ff244c12083992819897cef35a2590646157f8c3
         <table class="table table-bordered">
             <thead>
                 <tr>

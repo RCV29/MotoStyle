@@ -1,4 +1,5 @@
 <x-app-layout>
+<<<<<<< HEAD
     <style>
         .container {
             max-width: 1200px;
@@ -88,12 +89,17 @@
     </style>
     <div class="container flex flex-col items-center">
         <h1 class="text-lg font-bold text-center mb-6">My Concerns</h1>
+=======
+    <div class="flex flex-col items-center">
+        <h1 class="text-lg font-semibold text-center mb-6">My Concerns</h1>
+>>>>>>> ff244c12083992819897cef35a2590646157f8c3
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-4xl">
             @foreach($community as $item)
                 <div class="card">
                     <div class="card-image flex justify-center">
                         <img src="{{ asset($item->image) }}" class="image-size" alt="img">
                     </div>
+<<<<<<< HEAD
                     <h2 class="card-title text-center">{{ $item->name }}</h2>
                     <p class="card-description text-center">{/* Hide the description */}</p>
                     <div class="card-actions flex justify-center">
@@ -102,6 +108,21 @@
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="delete-button">Delete</button>
+=======
+                    <h2 class="text-lg font-semibold mb-2 text-center">{{ $item->name }}</h2>
+
+                    <div class="mt-4 flex justify-center">
+                        <a href="{{ route('community.edit', $item->id) }}" class="bg-gray-800 text-white border-2 border-gray-800 px-4 py-2 rounded-md hover:bg-gray-700 transition duration-200" style="margin-right: 10px;">
+                            Edit
+                        </a>
+                        
+                        <form action="{{ route('community.destroy', $item->id) }}" method="POST" class="inline-block">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="bg-red-600 text-white border-2 border-red-600 px-4 py-2 rounded-md hover:bg-red-700 transition duration-200" style="margin-left: 10px;">
+                                Delete
+                            </button>
+>>>>>>> ff244c12083992819897cef35a2590646157f8c3
                         </form>
                     </div>
                 </div>
